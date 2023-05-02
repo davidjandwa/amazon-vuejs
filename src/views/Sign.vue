@@ -7,7 +7,7 @@
                 </RouterLink>
             </div>
             <div class="flex justify-center items-center mt-1">
-                <form @submit.prevent="handleSubmit">
+                <form>
                     <div
                         class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                         <h1 class="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -18,7 +18,7 @@
                         </label>
                         <input type="text" id="name"
                             class="mb-2 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-amber-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            v-model="userName" />
+                            v-model="user.userName" />
                         <div v-if="userNameError" class="mt-2 text-sm text-green-600 dark:text-green-500 ">{{ userNameError
                         }}</div>
 
@@ -27,7 +27,7 @@
                         </label>
                         <input type="text" id="mobile"
                             class="mb-5 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-amber-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            v-model="userEmail" />
+                            v-model="user.userEmail" />
                         <div v-if="userEmailError" class="mt-2 text-sm text-green-600 dark:text-green-500 ">{{
                             userEmailError }}</div>
                         <label for="passwordInit"
@@ -36,7 +36,7 @@
                         </label>
                         <input type="password" id="passwordInit"
                             class="mb-2 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-amber-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            v-model="userPassword" />
+                            v-model="user.userPassword" />
                         <div v-if="userPasswordError" class="mt-2 text-sm text-green-600 dark:text-green-500 ">{{
                             userPasswordError }}</div>
                         <label for="passwordRepeat"
@@ -45,10 +45,10 @@
                         </label>
                         <input type="password" id="passwordRepeat"
                             class="mb-3 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-amber-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            v-model="userRepeatPassword" />
+                            v-model="user.userRepeatPassword" />
                         <div v-if="userRepeatPasswordError" class="mt-2 text-sm text-green-600 dark:text-green-500 ">{{
                             userRepeatPasswordError }}</div>
-                        <button type="submit"
+                        <button @click.prevent="signUpBottonPressed" type="submit"
                             class="rounded-lg mt-4 text-slate-900 text-sm block w-full p-2 bg-gradient-to-r from-amber-300 to-amber-300">
                             Continue
                         </button>
@@ -74,42 +74,21 @@
 export default {
     data() {
         return {
-            userName: '',
-            userEmail: '',
-            userPassword: '',
-            userRepeatPassword: '',
-            userNameError: '',
-            userEmailError: '',
-            userPasswordError: '',
-            userRepeatPasswordError: '',
-            tempSkill: '',
-            skills: [],
+            user: {
+                userName: '',
+                userEmail: '',
+                userPassword: '',
+                userRepeatPassword: ''
+           }
         }
     },
     methods: {
-        addSkill(e) {
-            if (e.key === ',' && this.tempSkill) {
-                if (!this.skills.includes(this.tempSkill)) {
-                    this.skills.push(this.tempSkill)
-                    console.log("Added")
-                }
-                this.tempSkill = ''
-            }
-        },
-        deleteSkill(skill) {
-            this.skills = this.skills.filter((item) => {
-                return skill !== item
-            })
-        },
-        handleSubmit() {
-            this.userNameError = this.userName.length > 5 ? '' : '*Username is required'
-            this.userEmailError = this.userEmail.length > 5 ? '' : '*Email address is required'
-            this.userPasswordError = this.userPassword.length > 5 ? '' : '*Password is required'
-            this.userRepeatPasswordError = this.userRepeatPassword.length > 5 ? '' : 'Re-enter password is required'
-            console.log("Form Submitted")
-            if (!this.userName) {
-                console.log("Success")
-            }
+        signUpBottonPressed() {
+            if (this.user.userName == "") {
+                console.log("name is empty")
+            } /* else {
+                this.user.userName = ""
+            } */
         }
     }
 }
